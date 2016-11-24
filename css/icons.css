@@ -38,15 +38,13 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
+
 .icon-linkedin:before {
   content: "\63";
-}
-.icon-envelope:before {
-  content: "\62";
 }
 .icon-twitter:before {
   content: "\64";
 }
-.icon-arrow-left:before {
-  content: "\61";
+.icon-git:before {
+  content: "\65";
 }
