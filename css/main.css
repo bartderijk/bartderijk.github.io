@@ -113,7 +113,7 @@ article {
 
 @media screen and ( max-width: 580px ){
     body {
-        padding: 180px 15px 15px 15px;
+        padding: 120px 15px 15px 15px;
     }
 
     .header {
@@ -123,7 +123,7 @@ article {
     }
 
     .header__logo-line {
-        font-size: 16px;
+        display: none;
     }
 
     .header__logo-link {
