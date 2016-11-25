@@ -117,7 +117,7 @@ article {
     }
 
     .header {
-        padding: 15px 60px 15px 15px;
+        padding: 15px;
         right: 0;
         left: 0;
     }
@@ -128,6 +128,10 @@ article {
 
     .header__logo-link {
         font-size: 21px;
+    }
+
+    .header__contact-list {
+        float: right;
     }
 
 }
