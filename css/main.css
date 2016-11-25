@@ -107,7 +107,7 @@ article {
 
 @media screen and ( max-width: 1024px ){
     body {
-        padding-top: 210px;
+        padding: 180px 20px 20px 20px;
     }
 
     .header__contact-list {
