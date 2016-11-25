@@ -106,6 +106,16 @@ article {
 }
 
 @media screen and ( max-width: 1024px ){
+    body {
+        padding: 90px 30px 30px 30px;
+    }
+
+    .header {
+        padding: 30px;
+        right: 0;
+        left: 0;
+    }
+
     .header__contact-list {
         float: none;
     }
@@ -113,7 +123,7 @@ article {
 
 @media screen and ( max-width: 580px ){
     body {
-        padding: 120px 15px 15px 15px;
+        padding: 75px 15px 15px 15px;
     }
 
     .header {
