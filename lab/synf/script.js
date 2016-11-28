@@ -1,26 +1,20 @@
 var Synf = function() {
 
     window.AudioContext = window.AudioContext || window.webkitAudioContext;
+
     var context = new AudioContext();
+    var that = this;
 
-    var NUM_NOTES = 88;
-    var AUTO_TUNE = true;
-    var oscillatorTypes = [
-        "sine",
-        "square",
-        "sawtooth",
-        "triangle"
-    ];
-
-    this.oscillatorTypeIndex = 0;
+    this.numNotes = 88;
+    this.autoTune = true;
+    this.oscillatorType = 'sine';
 
     amp = context.createGain();
     amp.gain.value = 0;
 
     oscillator = context.createOscillator();
     oscillator.frequency.value = 440;
-    oscillator.type = oscillatorTypes[this.oscillatorTypeIndex];
-
+    oscillator.type = this.oscillatorType;
     oscillator.connect(amp);
 
     amp.connect(context.destination);
@@ -31,8 +25,8 @@ var Synf = function() {
 
         var perc = (e.pageX / window.innerWidth);
 
-        var key = (88 - NUM_NOTES) / 2 + (NUM_NOTES * perc);
-        if (AUTO_TUNE) {
+        var key = (88 - that.numNotes) / 2 + (that.numNotes * perc);
+        if (that.autoTune) {
             key = Math.ceil(key);
         }
         var hz = Math.pow(2, ((key - 49) / 12)) * 440;
@@ -44,12 +38,13 @@ var Synf = function() {
         }
     });
 
-    var that = this;
+
     window.addEventListener("mousedown", function(e) {
-        oscillator.type = oscillatorTypes[that.oscillatorTypeIndex];
+        oscillator.type = that.oscillatorType;
         mousedown = true;
         amp.gain.value = 1 - (e.pageY / window.innerHeight);
     });
+
     window.addEventListener("mouseup", function(e) {
         mousedown = false;
         amp.gain.value = 0;
@@ -61,7 +56,7 @@ var Synf = function() {
     canvas.height = window.innerHeight;
     document.body.appendChild(canvas);
 
-    for (var i = 0; i < NUM_NOTES; i++) {
+    for (var i = 0; i < this.numNotes; i++) {
         var keyIndex = i % 12;
         var color = Math.random() * 0.05 + 0.9;
         if (keyIndex === 1 || keyIndex === 4 || keyIndex === 6 || keyIndex === 9 || keyIndex === 11) {
@@ -70,7 +65,7 @@ var Synf = function() {
         color = Math.floor(color * 256);
         color = 'rgb(' + color + ',' + color + ',' + color + ')';
         ctx.fillStyle = color;
-        ctx.fillRect(i * canvas.width / NUM_NOTES, 0, canvas.width / NUM_NOTES, canvas.height);
+        ctx.fillRect(i * canvas.width / this.numNotes, 0, canvas.width / this.numNotes, canvas.height);
         console.log(ctx.fillStyle);
     }
 
@@ -85,4 +80,10 @@ var Synf = function() {
 
 var synf = new Synf();
 var gui = new dat.GUI();
-gui.add(synf, 'oscillatorTypeIndex');
+
+gui.add(synf, 'oscillatorType', [
+    "sine",
+    "square",
+    "sawtooth",
+    "triangle"
+]);
