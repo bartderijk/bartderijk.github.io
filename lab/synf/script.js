@@ -25,7 +25,7 @@ var Synf = function() {
 
         var perc = (e.pageX / window.innerWidth);
 
-        var key = (88 - that.numNotes) / 2 + (that.numNotes * perc);
+        var key = (that.numNotes - that.numNotes) / 2 + (that.numNotes * perc); 
         if (that.autoTune) {
             key = Math.ceil(key);
         }
@@ -37,7 +37,6 @@ var Synf = function() {
             amp.gain.value = 1 - (e.pageY / window.innerHeight);
         }
     });
-
 
     window.addEventListener("mousedown", function(e) {
         oscillator.type = that.oscillatorType;
@@ -56,26 +55,29 @@ var Synf = function() {
     canvas.height = window.innerHeight;
     document.body.appendChild(canvas);
 
-    for (var i = 0; i < this.numNotes; i++) {
-        var keyIndex = i % 12;
-        var color = Math.random() * 0.05 + 0.9;
-        if (keyIndex === 1 || keyIndex === 4 || keyIndex === 6 || keyIndex === 9 || keyIndex === 11) {
-            color = Math.random() * 0.05 + 0.7;
+    this.drawCanvas = function(){
+
+        for (var i = 0; i < this.numNotes; i++) {
+            var keyIndex = i % 12;
+            var color = Math.random() * 0.05 + 0.9;
+            if (keyIndex === 1 || keyIndex === 4 || keyIndex === 6 || keyIndex === 9 || keyIndex === 11) {
+                color = Math.random() * 0.05 + 0.7;
+            }
+            color = Math.floor(color * 256);
+            color = 'rgb(' + color + ',' + color + ',' + color + ')';
+            ctx.fillStyle = color;
+            ctx.fillRect(i * canvas.width / this.numNotes, 0, canvas.width / this.numNotes, canvas.height);
         }
-        color = Math.floor(color * 256);
-        color = 'rgb(' + color + ',' + color + ',' + color + ')';
-        ctx.fillStyle = color;
-        ctx.fillRect(i * canvas.width / this.numNotes, 0, canvas.width / this.numNotes, canvas.height);
-        console.log(ctx.fillStyle);
-    }
 
-    var grd = ctx.createLinearGradient(0, 0, 0, canvas.height);
-    grd.addColorStop(0, "rgba(255,255,255,0)");
-    grd.addColorStop(1, "rgba(255,255,255,1)");
+        var grd = ctx.createLinearGradient(0, 0, 0, canvas.height);
+        grd.addColorStop(0, "rgba(255,255,255,0)");
+        grd.addColorStop(1, "rgba(255,255,255,1)");
 
-    ctx.fillStyle = grd;
-    ctx.fillRect(0, 0, canvas.width, canvas.height);
+        ctx.fillStyle = grd;
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+    };
 
+    this.drawCanvas();
 };
 
 var synf = new Synf();
@@ -87,3 +89,11 @@ gui.add(synf, 'oscillatorType', [
     "sawtooth",
     "triangle"
 ]);
+
+gui.add(synf, 'autoTune');
+var controller = gui.add(synf, 'numNotes', 1, 88);
+
+controller.onFinishChange(function(value) {
+    synf.numNotes = value;
+    synf.drawCanvas();
+});
