@@ -77,6 +77,25 @@
 <script src="js/libs/svgxuse.min.js" defer></script>
 
 <script>
+    // Let the computer decide the colors
+    var RandomCssColor = function() {
+        this.themeColors = ["Aqua", "Red", "Navy", "Indigo", "DarkTurquoise", "MediumSpringGreen"];
+
+        this.init = function() {
+            if (document.body.className === "") {
+                document.body.className = this.getRandomThemeColor();
+            }
+        };
+
+        this.getRandomThemeColor = function() {
+            return this.themeColors[Math.floor((Math.random() * this.themeColors.length))];
+        };
+    };
+
+    var randomThemeColorizer = new RandomCssColor();
+    randomThemeColorizer.init();
+
+    // Analytics
     (function(i, s, o, g, r, a, m) {
         i['GoogleAnalyticsObject'] = r;
         i[r] = i[r] || function() {

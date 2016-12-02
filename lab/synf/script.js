@@ -8,12 +8,13 @@ var Synf = function() {
     this.numNotes = 88;
     this.autoTune = true;
     this.oscillatorType = 'sine';
+    this.frequency = 440;
 
     amp = context.createGain();
     amp.gain.value = 0;
 
     oscillator = context.createOscillator();
-    oscillator.frequency.value = 440;
+    oscillator.frequency.value = this.frequency;
     oscillator.type = this.oscillatorType;
     oscillator.connect(amp);
 
@@ -25,15 +26,14 @@ var Synf = function() {
 
         var perc = (e.pageX / window.innerWidth);
 
-        var key = (that.numNotes - that.numNotes) / 2 + (that.numNotes * perc); 
+        var key = (that.numNotes - that.numNotes) / 2 + (that.numNotes * perc);
         if (that.autoTune) {
             key = Math.ceil(key);
         }
-        var hz = Math.pow(2, ((key - 49) / 12)) * 440;
+        var hz = Math.pow(2, ((key - 49) / 12)) * that.frequency;
 
         oscillator.frequency.value = hz;
         if (mousedown) {
-
             amp.gain.value = 1 - (e.pageY / window.innerHeight);
         }
     });
@@ -63,7 +63,7 @@ var Synf = function() {
             if (keyIndex === 1 || keyIndex === 4 || keyIndex === 6 || keyIndex === 9 || keyIndex === 11) {
                 color = Math.random() * 0.05 + 0.7;
             }
-            color = Math.floor(color * 256);
+            color = Math.floor(color * 255);
             color = 'rgb(' + color + ',' + color + ',' + color + ')';
             ctx.fillStyle = color;
             ctx.fillRect(i * canvas.width / this.numNotes, 0, canvas.width / this.numNotes, canvas.height);
@@ -91,6 +91,8 @@ gui.add(synf, 'oscillatorType', [
 ]);
 
 gui.add(synf, 'autoTune');
+gui.add(synf, 'frequency', 4, 440);
+
 var controller = gui.add(synf, 'numNotes', 1, 88);
 
 controller.onFinishChange(function(value) {
