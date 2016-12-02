@@ -93,9 +93,8 @@ gui.add(synf, 'oscillatorType', [
 gui.add(synf, 'autoTune');
 gui.add(synf, 'frequency', 4, 440);
 
-var controller = gui.add(synf, 'numNotes', 1, 88);
-
-controller.onFinishChange(function(value) {
+var numNotesController = gui.add(synf, 'numNotes', 1, 88);
+numNotesController.onFinishChange(function(value) {
     synf.numNotes = value;
     synf.drawCanvas();
 });

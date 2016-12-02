@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>colorTrans</title>
+
+    <script type="application/javascript" src="./jquery-3.1.1.min.js"></script>
+
+    <style type="text/css">
+        .Aqua { background: linear-gradient(to left top, cadetblue, Aqua); }
+        .Red { background: linear-gradient(to right bottom, orangered, Red);}
+        .Navy { background: linear-gradient(to right top, lightblue, Navy);}
+        .Indigo { background: linear-gradient(to left bottom, black, Indigo);}
+        .DarkTurquoise { background: linear-gradient(to top right, white, DarkTurquoise); }
+        .MediumSpringGreen { background: linear-gradient(to bottom left, green, MediumSpringGreen); }
+
+        #gradient-one, #gradient-two {
+            position: absolute;
+            right: 0;
+            left: 0;
+            top: 0;
+            bottom: 0;
+        }
+    </style>
+</head>
+<body>
+    <div id="gradient-one" class="Aqua"></div>
+    <div id="gradient-two" class="Indigo"></div>
+</body>
+<script type="application/javascript">
+
+    var gradientClasses = ["Aqua", "Red", "Navy", "Indigo", "DarkTurquoise", "MediumSpringGreen"];
+
+    var gradientOne = $("#gradient-one");
+    var gradientTwo = $("#gradient-two");
+
+    var active = 'gradientOne';
+    var fadeTime = 3000;
+
+    setInterval(function() {
+        if (active === 'gradientOne') {
+            gradientTwo.className = gradientClasses[Math.floor((Math.random() * this.gradientClasses.length))];
+            gradientOne.fadeOut(fadeTime);
+            gradientTwo.fadeIn(fadeTime);
+            active = 'gradientTwo';
+        } else {
+            gradientOne.className = gradientClasses[Math.floor((Math.random() * this.gradientClasses.length))];
+            gradientTwo.fadeOut(fadeTime);
+            gradientOne.fadeIn(fadeTime);
+            active = 'gradientOne';
+        }
+    }, fadeTime);
+
+</script>
+</html>
