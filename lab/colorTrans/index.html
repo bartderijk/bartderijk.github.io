@@ -24,7 +24,7 @@
     </style>
 </head>
 <body>
-    <div id="gradient-one" class="Aqua"></div>
+    <div id="gradient-one" class="Red"></div>
     <div id="gradient-two" class="Indigo"></div>
 </body>
 <script type="application/javascript">
@@ -35,18 +35,24 @@
     var gradientTwo = $("#gradient-two");
 
     var active = 'gradientOne';
-    var fadeTime = 1000;
+    var fadeTime = 2000;
 
     setInterval(function() {
         if (active === 'gradientOne') {
-            gradientTwo.className = gradientClasses[Math.floor((Math.random() * this.gradientClasses.length))];
+            var gradient = gradientClasses[Math.floor((Math.random() * this.gradientClasses.length))];
+            document.getElementById("gradient-two").classList = gradient;
+
             gradientOne.fadeOut(fadeTime);
             gradientTwo.fadeIn(fadeTime);
+
             active = 'gradientTwo';
         } else {
-            gradientOne.className = gradientClasses[Math.floor((Math.random() * this.gradientClasses.length))];
+            var gradient = gradientClasses[Math.floor((Math.random() * this.gradientClasses.length))];
+            document.getElementById("gradient-one").classList = gradient;
+
             gradientTwo.fadeOut(fadeTime);
             gradientOne.fadeIn(fadeTime);
+
             active = 'gradientOne';
         }
     }, fadeTime);
