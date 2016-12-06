@@ -6,7 +6,6 @@
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <title>Bart de Rijk - Front-end Dev</title>
     <link rel="stylesheet" href="css/main.css">
-    <link rel="icon" href="img/favicon.ico">
 </head>
 <body>
 <svg style="position: absolute; width: 0; height: 0; overflow: hidden;" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
@@ -78,13 +77,29 @@
 
 <script>
     // Let the computer decide the colors
-    var RandomCssColor = function() {
-        this.themeColors = ["Aqua", "Red", "Navy", "Indigo", "DarkTurquoise", "MediumSpringGreen"];
+    var RandomThemeColors = function() {
+
+        this.themeColors = ["Aqua", "Red", "Navy", "Indigo", "DarkTurquoise"];
+        this.themeColor = this.themeColors[0]; // default color
 
         this.init = function() {
+            this.themeColor = this.getRandomThemeColor();
+            this.setBodyClass();
+            this.setFavicon();
+        };
+
+        this.setBodyClass = function() {
             if (document.body.className === "") {
-                document.body.className = this.getRandomThemeColor();
+                document.body.className = this.themeColor;
             }
+        };
+
+        this.setFavicon = function(){
+            var link = document.querySelector("link[rel*='icon']") || document.createElement('link');
+            link.type = 'image/x-icon';
+            link.rel = 'shortcut icon';
+            link.href = 'img/favicon'+ this.themeColor +'.ico';
+            document.getElementsByTagName('head')[0].appendChild(link);
         };
 
         this.getRandomThemeColor = function() {
@@ -92,7 +107,7 @@
         };
     };
 
-    var randomThemeColorizer = new RandomCssColor();
+    var randomThemeColorizer = new RandomThemeColors();
     randomThemeColorizer.init();
 
     // Analytics
