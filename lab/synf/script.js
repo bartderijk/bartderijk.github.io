@@ -22,20 +22,22 @@ var Synf = function() {
 
     oscillator.start(0);
     var mousedown = false;
+
     window.addEventListener("mousemove", function(e) {
+        that.setTone(e, "mousemove");
+    });
 
-        var perc = (e.pageX / window.innerWidth);
+    window.addEventListener("keydown", function(e) {
+        that.setTone(e, "keydown");
 
-        var key = (that.numNotes - that.numNotes) / 2 + (that.numNotes * perc);
-        if (that.autoTune) {
-            key = Math.ceil(key);
-        }
-        var hz = Math.pow(2, ((key - 49) / 12)) * that.frequency;
+        oscillator.type = that.oscillatorType;
+        mousedown = true;
+        amp.gain.value = 1;// - (e.pageY / window.innerHeight);
+    });
 
-        oscillator.frequency.value = hz;
-        if (mousedown) {
-            amp.gain.value = 1 - (e.pageY / window.innerHeight);
-        }
+    window.addEventListener("keyup", function(e) {
+        mousedown = false;
+        amp.gain.value = 0;
     });
 
     window.addEventListener("mousedown", function(e) {
@@ -48,6 +50,28 @@ var Synf = function() {
         mousedown = false;
         amp.gain.value = 0;
     });
+
+    this.setTone = function(e, type) {
+        if (type === "mousemove") {
+            var perc = (e.pageX / window.innerWidth);
+        }
+
+        if (type === "keydown") {
+            var perc = (e.keyCode / 222);
+        }
+
+        var key = (that.numNotes - that.numNotes) / 2 + (that.numNotes * perc);
+        if (that.autoTune) {
+            key = Math.ceil(key);
+        }
+        var hz = Math.pow(2, ((key - 49) / 12)) * that.frequency;
+
+        oscillator.frequency.value = hz;
+
+        if (mousedown) {
+            amp.gain.value = 1;// - (e.pageY / window.innerHeight);
+        }
+    };
 
     var canvas = document.createElement('canvas');
     var ctx = canvas.getContext("2d");
