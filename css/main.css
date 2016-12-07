@@ -15,7 +15,7 @@ body {
     margin: 0;
     padding: 120px 60px;
     font-family: "Lucida Console", Monaco, monospace;
-    color: DarkGrey;
+    color: #123;
     background-color: #FFF;
     text-rendering: optimizeLegibility;
     -webkit-font-feature-settings: 'kern' 1, 'liga' 1;
@@ -28,6 +28,10 @@ h1, h2, h3, h4, h5, h6 {
 
 a {
     text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
 }
 
 .Aqua a, .Aqua .icon { color: Aqua; }
@@ -90,6 +94,10 @@ article {
 
 .header__logo-link {
     font-size: 28px;
+}
+
+a.header__logo-link:hover {
+    text-decoration: none;
 }
 
 .header__contact-list {
