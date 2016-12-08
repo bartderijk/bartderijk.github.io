@@ -56,8 +56,10 @@ var Synf = function() {
             var perc = (e.pageX / window.innerWidth);
         }
 
-        if (type === "keydown") {
-            var perc = (e.keyCode / 222);
+        if (type === "keydown" && that.isNumericKey(e.key)) {
+            var key = Number(e.key);
+            key = (key === 0) ? 9 : key - 1;
+            var perc = (key / 9);
         }
 
         var key = (that.numNotes - that.numNotes) / 2 + (that.numNotes * perc);
@@ -71,6 +73,18 @@ var Synf = function() {
         if (mousedown) {
             amp.gain.value = 1;// - (e.pageY / window.innerHeight);
         }
+    };
+
+    this.isNumericKey = function(key) {
+        var numericKeys = [0,1,2,3,4,5,6,7,8,9];
+
+        for (var number in numericKeys) {
+            if (numericKeys[number] === Number(key)) {
+                return true;
+            }
+        }
+
+        return false;
     };
 
     var canvas = document.createElement('canvas');
